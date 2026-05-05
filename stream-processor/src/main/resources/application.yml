@@ -1,0 +1,63 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: fraud-stream-processor
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fraudstream
+    username: fraud
+    password: fraud
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  kafka:
+    bootstrap-servers: localhost:9094
+    streams:
+      application-id: fraud-stream-processor
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        commit.interval.ms: 1000
+        num.stream.threads: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  metrics:
+    tags:
+      application: fraud-stream-processor
+
+fraud:
+  topic:
+    transactions: transactions
+    flags: flags
+  rules:
+    high-risk-mcc: 6051,7995,5933,7273
+    velocity:
+      window-seconds: 60
+      threshold: 5
+    amount-deviation:
+      window-minutes: 60
+      z-score-threshold: 3.0
+    geo-impossible:
+      max-km: 500
+      window-minutes: 30
+    round-amount-burst:
+      window-minutes: 10
+      threshold: 3
+
+logging:
+  level:
+    com.fraudstream: INFO
+    org.apache.kafka.streams: WARN
+  pattern:
+    console: '{"ts":"%d{ISO8601}","level":"%level","logger":"%logger{36}","msg":"%msg","correlationId":"%X{correlationId:-}"}%n'

@@ -1,0 +1,38 @@
+# Build outputs
+target/
+build/
+dist/
+*.jar
+*.war
+
+# Node
+node_modules/
+.vite/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Local env
+.env
+.env.local
+application-local.yml
+
+# Generated data (regenerate with scripts/generate_data.py)
+sample-data/transactions.csv
+sample-data/claims.csv
+
+# Docker volumes
+docker/data/
