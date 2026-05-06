@@ -26,6 +26,7 @@ spring:
         default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
         commit.interval.ms: 1000
         num.stream.threads: 2
+        missing.source.topic.metadata.is.fatal: "false"
 
 management:
   endpoints:
