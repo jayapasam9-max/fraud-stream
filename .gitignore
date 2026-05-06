@@ -36,3 +36,4 @@ sample-data/claims.csv
 
 # Docker volumes
 docker/data/
+.Rhistory
